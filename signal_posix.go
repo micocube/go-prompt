@@ -16,8 +16,7 @@ func (p *Prompt) handleSignals(exitCh chan int, winSizeCh chan *WinSize, stop ch
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(
 		sigCh,
-		syscall.SIGTERM,
-		syscall.SIGQUIT,
+
 		syscall.SIGWINCH,
 	)
 
@@ -28,14 +27,6 @@ func (p *Prompt) handleSignals(exitCh chan int, winSizeCh chan *WinSize, stop ch
 			return
 		case s := <-sigCh:
 			switch s {
-
-			case syscall.SIGTERM: // kill -SIGTERM XXXX
-				debug.Log("Catch SIGTERM")
-				exitCh <- 1
-
-			case syscall.SIGQUIT: // kill -SIGQUIT XXXX
-				debug.Log("Catch SIGQUIT")
-				exitCh <- 0
 
 			case syscall.SIGWINCH:
 				debug.Log("Catch SIGWINCH")
